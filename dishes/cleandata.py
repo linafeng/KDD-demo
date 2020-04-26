@@ -44,18 +44,23 @@ def double_df(x):
     if x == 'NAN':
         return None;
     return x;
+
+
 score['ounces'] = score['ounces'].apply(double_df)
-score['ounces']=score['ounces'].astype(np.float64)
-#找出负数
+score['ounces'] = score['ounces'].astype(np.float64)
+# 找出负数
 print("删除负数")
 score = score.drop(score[score.ounces < 0].index)
-#空值替换
+# 空值替换
 print("空值替换")
 print(score['ounces'].mean())
 print(score)
 score['ounces'].fillna(score['ounces'].mean(), inplace=True)
 print(score)
-
-
+# 删除重复数据
+print("删除重复数据")
+score.drop_duplicates(['food', 'ounces', 'animal'], inplace=True)
+print(score)
+score.drop_duplicates(['food',  'animal'], inplace=True)
+print(score)
 score.to_excel('gooddata.xlsx')
-
